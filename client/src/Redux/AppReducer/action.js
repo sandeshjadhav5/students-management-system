@@ -3,7 +3,7 @@ import * as types from "./actionTypes";
 import axios from "axios";
 
 const getStudents = () => {
-  return { type: types.GET_STUDENTS };
+  return { type: types.GET_STUDENTS, payload };
 };
 
 const getStudentsRequest = () => {
