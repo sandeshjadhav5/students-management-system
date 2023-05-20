@@ -1,4 +1,9 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
+import { userLoginFunction } from "../Redux/AuthReducer/action";
+
+import AOS from "aos";
+import "aos/dist/aos.css";
 import "./Home.css";
 
 import {
@@ -25,9 +30,12 @@ const Home = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   let darkLightMode =
     colorMode == "dark" ? "class-name-dark" : "class-name-light";
-
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const isAuthLoading = useSelector((state) => state.AuthReducer.isAuthLoading);
+  console.log("isAuth=>", isAuthLoading);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -37,6 +45,7 @@ const Home = () => {
     };
 
     if (payload) {
+      dispatch(userLoginFunction(payload));
     }
   };
 
@@ -105,11 +114,24 @@ const Home = () => {
                   placeholder="Enter Password"
                 />
               </Stack>
-              <input className="submitBtnAdmin" type="submit" />
+              {isAuthLoading && (
+                <div className="InputSubmitBtnLoading">
+                  <div>
+                    <img
+                      src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif"
+                      alt="loading..."
+                    />
+                  </div>
+                </div>
+              )}
+              {!isAuthLoading && (
+                <input className="submitBtnAdmin" type="submit" />
+              )}
             </form>
           </Stack>
         </Container>
       </Box>
+      <div id="snackbar"></div>
     </div>
   );
 };

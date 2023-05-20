@@ -13,7 +13,13 @@ const reducer = (state = initialState, action) => {
     case types.USER_LOGIN_REQUEST:
       return { ...state, isAuthLoading: true };
     case types.USER_LOGIN_SUCCESS:
-      return { ...state, isAuthLoading: false, isAuth: true, token: payload };
+      return {
+        ...state,
+        isAuthLoading: false,
+        isAuth: true,
+        token: payload,
+        isAuthError: false,
+      };
     case types.USER_LOGIN_ERROR:
       return {
         ...state,
