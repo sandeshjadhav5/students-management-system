@@ -1,14 +1,14 @@
-.emailInputAdmin {
-  background-color: #edf2f7;
+.class-name-dark {
+  background-color: #282b36;
   padding: 0.5rem;
-
   border: 0;
+  color: white;
 }
-.passwordInputAdmin {
+.class-name-light {
   background-color: #edf2f7;
   padding: 0.5rem;
-
   border: 0;
+  color: black;
 }
 .submitBtnAdmin {
   background-color: #90cdf4;

@@ -22,10 +22,13 @@ import Navbar from "../Components/Navbar";
 
 const Home = () => {
   const { colorMode, toggleColorMode } = useColorMode();
+  let darkLightMode =
+    colorMode == "dark" ? "class-name-dark" : "class-name-light";
+
   return (
     <div>
       <Navbar />
-      <Box position={"relative"} border="solid red 1px">
+      <Box position={"relative"}>
         <Container
           as={SimpleGrid}
           maxW={"7xl"}
@@ -35,10 +38,10 @@ const Home = () => {
         >
           <Stack spacing={{ base: 10, md: 20 }}>
             <Heading
-              lineHeight={1.1}
+              lineHeight={1.2}
               fontSize={{ base: "3xl", sm: "4xl", md: "5xl", lg: "6xl" }}
             >
-              STUDENT MANAGEMENT SYSTEM
+              STUDENTS MANAGEMENT SYSTEM
               <Text
                 as={"span"}
                 bgGradient="linear(to-r, red.400,pink.400)"
@@ -47,7 +50,7 @@ const Home = () => {
             </Heading>
           </Stack>
           <Stack
-            bgColor={colorMode == "dark" ? "#171923" : "#F7FAFC"}
+            bgColor={colorMode == "dark" ? "#171923" : "#e9d7ff"}
             rounded={"xl"}
             p={{ base: 4, sm: 6, md: 8 }}
             spacing={{ base: 8 }}
@@ -72,30 +75,12 @@ const Home = () => {
                 Enter Admin Credentials to Get Started
               </Text>
             </Stack>
-            <form as={"form"}>
+            <form>
               <Stack spacing={4}>
-                <input
-                  className="emailInputAdmin"
-                  placeholder="Enter Email Id"
-                />
-                <input
-                  className="passwordInputAdmin"
-                  placeholder="Enter Password"
-                />
+                <input className={darkLightMode} placeholder="Enter Email Id" />
+                <input className={darkLightMode} placeholder="Enter Password" />
               </Stack>
-              <input
-                className="submitBtnAdmin"
-                fontFamily={"heading"}
-                type="submit"
-                mt={8}
-                w={"full"}
-                bgGradient="linear(to-l, green.400,green.300)"
-                color={"white"}
-                _hover={{
-                  bgGradient: "linear(to-r, green.600,green.500)",
-                  boxShadow: "xl",
-                }}
-              />
+              <input className="submitBtnAdmin" type="submit" />
             </form>
           </Stack>
         </Container>
