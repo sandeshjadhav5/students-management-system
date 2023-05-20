@@ -1,0 +1,17 @@
+.modalForm div {
+  /* border: solid black 1px; */
+}
+.modalForm label {
+  width: 100%;
+}
+.modalForm input {
+  padding-left: 1rem;
+  margin-bottom: 1rem;
+  border: solid 1px #ccc;
+  width: 100%;
+}
+.modalForm select {
+  margin-bottom: 1rem;
+  border: solid 1px #ccc;
+  width: 100%;
+}

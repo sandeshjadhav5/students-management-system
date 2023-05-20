@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Home.css";
 
 import {
@@ -17,6 +17,7 @@ import {
   IconProps,
   Icon,
 } from "@chakra-ui/react";
+import { useDispatch, useSelector } from "react-redux";
 import { useColorMode } from "@chakra-ui/react";
 import Navbar from "../Components/Navbar";
 
@@ -24,6 +25,20 @@ const Home = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   let darkLightMode =
     colorMode == "dark" ? "class-name-dark" : "class-name-light";
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const payload = {
+      email,
+      password,
+    };
+
+    if (payload) {
+    }
+  };
 
   return (
     <div>
@@ -75,10 +90,20 @@ const Home = () => {
                 Enter Admin Credentials to Get Started
               </Text>
             </Stack>
-            <form>
+            <form onSubmit={handleSubmit}>
               <Stack spacing={4}>
-                <input className={darkLightMode} placeholder="Enter Email Id" />
-                <input className={darkLightMode} placeholder="Enter Password" />
+                <input
+                  type="email"
+                  onChange={(e) => setEmail(e.target.value)}
+                  className={darkLightMode}
+                  placeholder="Enter Email Id"
+                />
+                <input
+                  type="password"
+                  onChange={(e) => setPassword(e.target.value)}
+                  className={darkLightMode}
+                  placeholder="Enter Password"
+                />
               </Stack>
               <input className="submitBtnAdmin" type="submit" />
             </form>

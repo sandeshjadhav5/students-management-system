@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./Sidebar.css";
 import {
   Box,
   Button,
@@ -55,37 +56,36 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
         <ModalContent>
           <ModalHeader>Add Student to Database</ModalHeader>
           <ModalBody>
-            <form>
-              <label>
-                Name :
+            <form className="modalForm">
+              <div>
+                <label>Name of Student:</label>
                 <input type="text" />
-              </label>
-              <br />
-              <label>
-                Registration Number :
+              </div>
+              <div>
+                <label>Registration Number :</label>
                 <input type="text" />
-              </label>
-              <br />
-              <label>
-                Date Of Birth :
+              </div>
+
+              <div>
+                <label>Date Of Birth :</label>
+                <br />
                 <input type="date" />
-              </label>
-              <br />
-              <label>
-                Mobile Number :
+              </div>
+
+              <div>
+                <label>Mobile Number :</label>
                 <input type="number" />
-              </label>
-              <br />
-              <label>
-                Select Year :
+              </div>
+
+              <div>
+                <label>Select Year :</label> <br />
                 <select>
                   <option>First</option>
                   <option>Second</option>
                   <option>Third</option>
                   <option>Fourth</option>
                 </select>
-              </label>
-              <br />
+              </div>
             </form>
           </ModalBody>
           <ModalFooter>
@@ -99,12 +99,11 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
     </Box>
   ) : (
     <>
-      {" "}
       <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
         <DrawerOverlay>
           <DrawerContent>
             <DrawerCloseButton />
-            <DrawerHeader>Chakra-UI</DrawerHeader>
+            <DrawerHeader>Atendance Management </DrawerHeader>
             <DrawerBody>
               <VStack onClick={onClose}>
                 <Heading as="h3" size="lg" pt="2" pb="2">
@@ -125,37 +124,36 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
         <ModalContent>
           <ModalHeader>Add Student to Database</ModalHeader>
           <ModalBody>
-            <form>
-              <label>
-                Name :
+            <form className="modalForm">
+              <div>
+                <label>Name of Student:</label>
                 <input type="text" />
-              </label>
-              <br />
-              <label>
-                Registration Number :
+              </div>
+              <div>
+                <label>Registration Number :</label>
                 <input type="text" />
-              </label>
-              <br />
-              <label>
-                Date Of Birth :
+              </div>
+
+              <div>
+                <label>Date Of Birth :</label>
+                <br />
                 <input type="date" />
-              </label>
-              <br />
-              <label>
-                Mobile Number :
+              </div>
+
+              <div>
+                <label>Mobile Number :</label>
                 <input type="number" />
-              </label>
-              <br />
-              <label>
-                Select Year :
+              </div>
+
+              <div>
+                <label>Select Year :</label> <br />
                 <select>
                   <option>First</option>
                   <option>Second</option>
                   <option>Third</option>
                   <option>Fourth</option>
                 </select>
-              </label>
-              <br />
+              </div>
             </form>
           </ModalBody>
           <ModalFooter>
