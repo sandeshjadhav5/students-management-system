@@ -23,6 +23,11 @@ const reducer = (state = initialState, action) => {
         getStudentsLoading: false,
         getStudentsSuccess: false,
       };
+    case types.ADD_STUDENTS:
+      return {
+        ...state,
+        student: payload,
+      };
     default:
       return state;
   }
