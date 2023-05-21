@@ -1,14 +1,16 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
+import Login from "./Login";
 import Home from "./Home";
-import Dashboard from "./Dashboard";
+import MarkAttendance from "./MarkAttendance";
 
 const MainRoutes = () => {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/dashboard" element={<Home />} />
+        <Route path="/markattendance" element={<MarkAttendance />} />
       </Routes>
     </div>
   );

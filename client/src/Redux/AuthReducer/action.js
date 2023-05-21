@@ -1,37 +1,43 @@
 import * as types from "./actionTypes";
 import axios from "axios";
 
-const userLoginRequest = () => {
-  return { type: types.USER_LOGIN_REQUEST };
+const userLoginReq = () => {
+  return { type: types.LOGIN_USER_REQUEST };
 };
 
-const userLoginSuccess = (payload) => {
-  return { type: types.USER_LOGIN_SUCCESS, payload };
+const userLoginSuccess = () => {
+  return { type: types.LOGIN_USER_SUCCESS };
 };
 
-const userLoginError = () => {
-  return { type: types.USER_LOGIN_ERROR };
+const userLoginFailure = () => {
+  return { type: types.LOGIN_USER_FAILURE };
 };
 
-const userLoginFunction = (payload) => (dispatch) => {
-  dispatch(userLoginRequest());
+const logoutUser = () => {
+  localStorage.removeItem("token");
+  return { type: types.LOGOUT_USER };
+};
+
+const loginFunction = (payload) => (dispatch) => {
+  dispatch(userLoginReq());
   return axios
-    .post(`https://odd-tan-mackerel-wig.cyclic.app/users/login`, payload)
+    .post(`https://long-gray-cougar-toga.cyclic.app/users/login`, payload)
     .then((res) => {
       console.log(res);
-      let token = res.data.token;
-      if (token) {
-        localStorage.setItem("token", JSON.stringify(res.data.token));
+      // let token = res.data.token;
+      if (res.data == "Login Successful") {
+        localStorage.setItem("isAuth", JSON.stringify(true));
         let x = document.getElementById("snackbar");
         x.className = "show";
-        x.innerText = res.data.msg;
+        x.innerText = res.data;
         x.style.backgroundColor = "green";
         setTimeout(function () {
           x.className = x.className.replace("show", "");
           dispatch(userLoginSuccess());
         }, 3000);
-      } else if (res.data == "Something Went Wrong") {
-        dispatch(userLoginError());
+      } else if (res.data == "Enter Correct Details") {
+        localStorage.setItem("isAuth", JSON.stringify(false));
+        dispatch(userLoginFailure());
         let x = document.getElementById("snackbar");
         x.innerText = res.data;
         x.style.backgroundColor = "red";
@@ -40,7 +46,8 @@ const userLoginFunction = (payload) => (dispatch) => {
           x.className = x.className.replace("show", "");
         }, 3000);
       } else if (res.data == "Wrong Credentials") {
-        dispatch(userLoginError());
+        localStorage.setItem("isAuth", JSON.stringify(false));
+        dispatch(userLoginFailure());
         let x = document.getElementById("snackbar");
         x.innerText = res.data;
         x.style.backgroundColor = "red";
@@ -52,6 +59,7 @@ const userLoginFunction = (payload) => (dispatch) => {
     })
     .catch((err) => {
       console.log(err);
+      localStorage.setItem("isAuth", JSON.stringify(false));
       let x = document.getElementById("snackbar");
       x.innerText = "Error Loggin In";
       x.style.backgroundColor = "#1A5276";
@@ -59,12 +67,14 @@ const userLoginFunction = (payload) => (dispatch) => {
       setTimeout(function () {
         x.className = x.className.replace("show", "");
       }, 3000);
-      dispatch(userLoginError());
+      dispatch(userLoginFailure());
     });
 };
+
 export {
-  userLoginFunction,
-  userLoginError,
-  userLoginRequest,
+  userLoginReq,
   userLoginSuccess,
+  userLoginFailure,
+  loginFunction,
+  logoutUser,
 };

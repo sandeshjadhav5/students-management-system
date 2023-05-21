@@ -3,13 +3,13 @@ import { Box, useBreakpointValue } from "@chakra-ui/react";
 import "@fontsource/raleway/400.css";
 import "@fontsource/open-sans/700.css";
 
-import Header from "../Components/Header";
-import Sidebar from "../Components/Sidebar";
+import Header from "./Header";
+import Sidebar from "./Sidebar";
 
 const smVariant = { navigation: "drawer", navigationButton: true };
 const mdVariant = { navigation: "sidebar", navigationButton: false };
 
-export default function Dashboard() {
+export default function Sidebar_Header() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const variants = useBreakpointValue({ base: smVariant, md: mdVariant });
 

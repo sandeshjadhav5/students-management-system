@@ -1,31 +1,33 @@
 import * as types from "./actionTypes";
+
 const initialState = {
   isAuth: false,
-  token: "",
+  isRegistered: false,
   isAuthLoading: false,
-  isAuthError: false,
+  isAuthFailure: false,
+  isAdminLogin: false,
+  token: "",
 };
 
 const reducer = (state = initialState, action) => {
   const { type, payload } = action;
-
   switch (type) {
-    case types.USER_LOGIN_REQUEST:
+    case types.LOGIN_USER_REQUEST:
       return { ...state, isAuthLoading: true };
-    case types.USER_LOGIN_SUCCESS:
+    case types.LOGIN_USER_SUCCESS:
+      return { ...state, isAuth: true, isAuthLoading: false };
+    case types.LOGIN_USER_FAILURE:
       return {
         ...state,
+        isAuthFailure: true,
         isAuthLoading: false,
-        isAuth: true,
-        token: payload,
-        isAuthError: false,
-      };
-    case types.USER_LOGIN_ERROR:
-      return {
-        ...state,
-        isAuthError: true,
         isAuth: false,
-        isAuthLoading: false,
+      };
+    case types.LOGOUT_USER:
+      return {
+        ...state,
+        isAuth: false,
+        isAdminLogin: false,
       };
     default:
       return state;

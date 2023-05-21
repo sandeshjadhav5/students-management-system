@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./Sidebar.css";
+import { Link } from "react-router-dom";
 import {
   Box,
   Button,
@@ -38,17 +39,25 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
       w="200px"
       top={0}
       h="100%"
-      bg="#EBF8FF"
+      bg="#CBD5E0"
     >
       <VStack onClick={onClose}>
         <Heading as="h3" size="lg" pt="2" pb="2">
-          SGGSIE&T{" "}
+          SGGSIE&T
         </Heading>
-        <Button w="100%">Home</Button>
+        <Box w="100%">
+          <Link to="/">
+            <Button w="100%">Home</Button>
+          </Link>
+        </Box>
         <Button onClick={handleOpenModal} w="100%">
           Add Student
         </Button>
-        <Button w="100%">Contact</Button>
+        <Box w="100%">
+          <Link to="/markattendance">
+            <Button w="100%">Attendance</Button>
+          </Link>
+        </Box>
       </VStack>
 
       <Modal isOpen={isModalOpen} onClose={handleCloseModal} size="xl">
@@ -89,7 +98,7 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
             </form>
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={handleCloseModal}>
+            <Button colorScheme="teal" mr={3} onClick={handleCloseModal}>
               Close
             </Button>
             <Button variant="ghost">Submit</Button>
@@ -109,11 +118,19 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
                 <Heading as="h3" size="lg" pt="2" pb="2">
                   SGGSIE&T{" "}
                 </Heading>
-                <Button w="100%">Home</Button>
+                <Box w="100%">
+                  <Link to="/">
+                    <Button w="100%">Home</Button>
+                  </Link>
+                </Box>
                 <Button onClick={handleOpenModal} w="100%">
                   Add Student
                 </Button>
-                <Button w="100%">Contact</Button>
+                <Box w="100%">
+                  <Link to="/markattendance">
+                    <Button w="100%">Attendance</Button>
+                  </Link>
+                </Box>
               </VStack>
             </DrawerBody>
           </DrawerContent>
@@ -157,7 +174,7 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
             </form>
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={handleCloseModal}>
+            <Button colorScheme="teal" mr={3} onClick={handleCloseModal}>
               Close
             </Button>
             <Button variant="ghost">Submit</Button>
