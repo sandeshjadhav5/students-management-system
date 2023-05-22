@@ -5,6 +5,9 @@ const initialState = {
   getStudentsLoading: false,
   getStudentsSuccess: false,
   getStudentsError: false,
+  addStudentsLoading: false,
+  addStudentsSuccess: false,
+  addStudentsError: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -27,6 +30,25 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         student: payload,
+      };
+    case types.ADD_STUDENTS_REQUEST:
+      return {
+        ...state,
+        addStudentsLoading: true,
+      };
+    case types.ADD_STUDENTS_SUCCESS:
+      return {
+        ...state,
+        addStudentsSuccess: true,
+        addStudentsLoading: false,
+        addStudentsError: false,
+      };
+    case types.ADD_STUDENTS_ERROR:
+      return {
+        ...state,
+        addStudentsLoading: false,
+        addStudentsSuccess: false,
+        addStudentsError: true,
       };
     default:
       return state;

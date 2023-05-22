@@ -38,9 +38,31 @@ const addStudents = (payload) => (dispatch) => {
       payload
     )
     .then((res) => {
-      console.log(res);
+      console.log(res.data.msg);
+      if (res.data.msg == "Student Added Successfully") {
+        let x = document.getElementById("snackbar");
+        x.className = "show";
+        x.innerText = res.data.msg;
+        x.style.backgroundColor = "#48BB78";
+        setTimeout(function () {
+          x.className = x.className.replace("show", "");
+          dispatch(addStudentsSuccess());
+        }, 3000);
+      } else if (res.data.msg == "Something Went Wrong") {
+        let x = document.getElementById("snackbar");
+        x.innerText = res.data.msg;
+        x.style.backgroundColor = "red";
+        x.style.position = "fixed";
+
+        x.className = "show";
+        setTimeout(function () {
+          x.className = x.className.replace("show", "");
+          dispatch(addStudentsError());
+        }, 3000);
+      }
     })
     .catch((err) => {
+      dispatch(addStudentsError());
       console.log(err);
     });
 };

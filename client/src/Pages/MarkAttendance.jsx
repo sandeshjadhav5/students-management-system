@@ -65,7 +65,7 @@ const MarkAttendance = () => {
               </Thead>
               <Tbody>
                 {studentsData.map((el) => (
-                  <Tr>
+                  <Tr key={el._id}>
                     <Td>{el.name}</Td>
                     <Td> {el.registrationNumber}</Td>
                     <Td>{el.year}</Td>

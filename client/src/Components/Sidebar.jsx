@@ -1,6 +1,14 @@
 import { useState } from "react";
+import "../Pages/Home.css";
 import "./Sidebar.css";
 import { Link } from "react-router-dom";
+import { useToast } from "@chakra-ui/react";
+import {
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+} from "@chakra-ui/react";
 import {
   Box,
   Button,
@@ -28,12 +36,25 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
   const [name, setName] = useState("");
   const [registrationNumber, setRegistrationNumber] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
-  const [mobileNumber, setMobileNumber] = useState("");
+  const [mobileNumber, setMobileNumber] = useState();
   const [year, setYear] = useState("");
   const dispatch = useDispatch();
 
+  const isAddStudentsLoading = useSelector(
+    (state) => state.AppReducer.addStudentsLoading
+  );
+  const isAddStudentsSuccess = useSelector(
+    (state) => state.AppReducer.addStudentsSuccess
+  );
+  console.log(
+    "isddLoading",
+    isAddStudentsLoading,
+    "isAddSuccess",
+    isAddStudentsSuccess
+  );
   const handleSubmitAddStudent = (e) => {
     e.preventDefault();
+    console.log(typeof mobileNumber);
     const payload = {
       name,
       registrationNumber,
@@ -54,6 +75,14 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
   const handleCloseModal = () => {
     setIsOpen(false);
   };
+  // const toast = useToast({});
+  // if (isAddStudentsSuccess) {
+  //   toast({
+  //     title: `Student Added Successfully`,
+  //     position: "top-right",
+  //     isClosable: true,
+  //   });
+  // }
   return variant === "sidebar" ? (
     <Box
       position="fixed"
@@ -91,13 +120,18 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
             <form onSubmit={handleSubmitAddStudent} className="modalForm">
               <div>
                 <label>Name of Student:</label>
-                <input onChange={(e) => setName(e.target.value)} type="text" />
+                <input
+                  onChange={(e) => setName(e.target.value)}
+                  type="text"
+                  required
+                />
               </div>
               <div>
                 <label>Registration Number :</label>
                 <input
                   onChange={(e) => setRegistrationNumber(e.target.value)}
                   type="text"
+                  required
                 />
               </div>
 
@@ -107,6 +141,7 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
                 <input
                   onChange={(e) => setDateOfBirth(e.target.value)}
                   type="date"
+                  required
                 />
               </div>
 
@@ -115,12 +150,13 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
                 <input
                   onChange={(e) => setMobileNumber(e.target.value)}
                   type="number"
+                  required
                 />
               </div>
 
               <div>
                 <label>Select Year :</label> <br />
-                <select onChange={(e) => setYear(e.target.value)}>
+                <select onChange={(e) => setYear(e.target.value)} required>
                   <option>Select Year</option>
                   <option>First</option>
                   <option>Second</option>
@@ -128,7 +164,14 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
                   <option>Fourth</option>
                 </select>
               </div>
-              <input type="submit" />
+              {!isAddStudentsLoading && (
+                <input className="submitBtnAdmin" type="submit" />
+              )}
+              {isAddStudentsLoading && (
+                <div className="submitBtnAdmin">
+                  <img src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif" />
+                </div>
+              )}
             </form>
           </ModalBody>
           <ModalFooter>
@@ -139,6 +182,7 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
           </ModalFooter>
         </ModalContent>
       </Modal>
+      <div id="snackbar"></div>
     </Box>
   ) : (
     <>
@@ -178,13 +222,18 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
             <form onSubmit={handleSubmitAddStudent} className="modalForm">
               <div>
                 <label>Name of Student:</label>
-                <input onChange={(e) => setName(e.target.value)} type="text" />
+                <input
+                  onChange={(e) => setName(e.target.value)}
+                  type="text"
+                  required
+                />
               </div>
               <div>
                 <label>Registration Number :</label>
                 <input
                   onChange={(e) => setRegistrationNumber(e.target.value)}
                   type="text"
+                  required
                 />
               </div>
 
@@ -194,6 +243,7 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
                 <input
                   onChange={(e) => setDateOfBirth(e.target.value)}
                   type="date"
+                  required
                 />
               </div>
 
@@ -202,12 +252,13 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
                 <input
                   onChange={(e) => setMobileNumber(e.target.value)}
                   type="number"
+                  required
                 />
               </div>
 
               <div>
                 <label>Select Year :</label> <br />
-                <select onChange={(e) => setYear(e.target.value)}>
+                <select onChange={(e) => setYear(e.target.value)} required>
                   <option>Select Year</option>
                   <option>First</option>
                   <option>Second</option>
@@ -215,6 +266,14 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
                   <option>Fourth</option>
                 </select>
               </div>
+              {!isAddStudentsLoading && (
+                <input className="submitBtnAdmin" type="submit" />
+              )}
+              {isAddStudentsLoading && (
+                <div className="submitBtnAdmin">
+                  <img src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif" />
+                </div>
+              )}
             </form>
           </ModalBody>
           <ModalFooter>
@@ -225,6 +284,7 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
           </ModalFooter>
         </ModalContent>
       </Modal>
+      <div id="snackbar"></div>
     </>
   );
 };
