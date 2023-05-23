@@ -13,7 +13,7 @@ import {
   TableCaption,
   TableContainer,
 } from "@chakra-ui/react";
-const MarkAttendance = () => {
+const Attendance = () => {
   const [studentsData, setStudentsData] = useState([]);
   const getStudents = () => {
     axios
@@ -35,23 +35,6 @@ const MarkAttendance = () => {
       <div className="mainContent">
         <Heading fontFamily="body">All Students</Heading>
         <Box>
-          {/* <form>
-            <select>
-              <option>Select Year</option>
-              <option>First</option>
-              <option>Second</option>
-              <option>Third</option>
-              <option>Fourth</option>
-            </select>
-            <br />
-            <select>
-              <option>Select</option>
-              <option>First</option>
-              <option>Second</option>
-              <option>Third</option>
-              <option>Fourth</option>
-            </select>
-          </form> */}
           <TableContainer>
             <Table size="sm" variant="striped" colorScheme="purple">
               <TableCaption>List of All Students Enrolled</TableCaption>
@@ -86,4 +69,4 @@ const MarkAttendance = () => {
   );
 };
 
-export default MarkAttendance;
+export default Attendance;

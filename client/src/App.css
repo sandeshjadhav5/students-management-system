@@ -10,7 +10,7 @@
 /* M  E  D  I  A     Q  U  R  I  E  S */
 @media (max-width: 770px) {
   .mainContent {
-    border: solid red 3px;
+    border: solid #ccc 3px;
     margin: 0;
   }
 }

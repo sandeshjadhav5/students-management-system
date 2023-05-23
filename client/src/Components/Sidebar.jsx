@@ -29,7 +29,7 @@ import {
   ModalBody,
   ModalFooter,
 } from "@chakra-ui/react";
-import { addStudents } from "../Redux/AppReducer/action";
+import { addStudents, addStudentsSuccess } from "../Redux/AppReducer/action";
 import { useDispatch, useSelector } from "react-redux";
 const Sidebar = ({ isOpen, variant, onClose }) => {
   const [isModalOpen, setIsOpen] = useState(false);
@@ -75,14 +75,14 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
   const handleCloseModal = () => {
     setIsOpen(false);
   };
-  // const toast = useToast({});
-  // if (isAddStudentsSuccess) {
-  //   toast({
-  //     title: `Student Added Successfully`,
-  //     position: "top-right",
-  //     isClosable: true,
-  //   });
-  // }
+  const toast = useToast({});
+  if (isAddStudentsSuccess) {
+    toast({
+      title: `Student Added Successfully`,
+      position: "top-right",
+      isClosable: true,
+    });
+  }
   return variant === "sidebar" ? (
     <Box
       position="fixed"
@@ -106,8 +106,13 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
           Add Student
         </Button>
         <Box w="100%">
-          <Link to="/markattendance">
+          <Link to="/attendance">
             <Button w="100%">Attendance</Button>
+          </Link>
+        </Box>
+        <Box w="100%">
+          <Link to="/markattendance">
+            <Button w="100%">Lectures</Button>
           </Link>
         </Box>
       </VStack>
@@ -178,7 +183,6 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
             <Button colorScheme="teal" mr={3} onClick={handleCloseModal}>
               Close
             </Button>
-            {/* <Button variant="ghost">Submit</Button> */}
           </ModalFooter>
         </ModalContent>
       </Modal>
@@ -205,8 +209,13 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
                   Add Student
                 </Button>
                 <Box w="100%">
-                  <Link to="/markattendance">
+                  <Link to="/attendance">
                     <Button w="100%">Attendance</Button>
+                  </Link>
+                </Box>
+                <Box w="100%">
+                  <Link to="/markattendance">
+                    <Button w="100%">Lectures</Button>
                   </Link>
                 </Box>
               </VStack>
@@ -280,7 +289,6 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
             <Button colorScheme="teal" mr={3} onClick={handleCloseModal}>
               Close
             </Button>
-            <Button variant="ghost">Submit</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
