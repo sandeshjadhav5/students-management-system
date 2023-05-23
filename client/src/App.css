@@ -11,6 +11,6 @@
 @media (max-width: 770px) {
   .mainContent {
     border: solid #ccc 3px;
-    margin: 0;
+    margin: 10px;
   }
 }

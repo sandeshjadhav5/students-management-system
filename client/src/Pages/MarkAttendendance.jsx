@@ -1,94 +1,182 @@
-import React from "react";
-import Sidebar_Header from "../Components/Sidebar_Header";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import "../Pages/Home.css";
 
 import { Link } from "react-router-dom";
-import { Heading, Text, useToast } from "@chakra-ui/react";
+import { Box, Heading, Table, TableCaption, TableContainer, Tbody, Td, Text, Tfoot, Th, Thead, Toast, Tr, useToast } from "@chakra-ui/react";
 
-import { addStudents, addStudentsSuccess } from "../Redux/AppReducer/action";
-import { useDispatch, useSelector } from "react-redux";
+import { addStudents} from "../Redux/AppReducer/action";
+import { useDispatch } from "react-redux";
+import SidebarHeader from "../Components/Sidebar_Header";
+import axios from "axios";
 
 const MarkAttendendance = () => {
-  const [name, setName] = useState("");
-  const [registrationNumber, setRegistrationNumber] = useState("");
-  const [dateOfBirth, setDateOfBirth] = useState("");
-  const [mobileNumber, setMobileNumber] = useState();
-  const [year, setYear] = useState("");
+  const [data, setData] = useState({lecture_date:"",start_at:"",end_at:"",year:"",lecture_type:""})
   const dispatch = useDispatch();
+  const [subjectArr, setSubjectArr] = useState([])
+  const [subject, setSubject] = useState(null)
+  const [studentsData, setStudentsData] = useState([])
+  const [present, setPresent] = useState([])
+  
+  useEffect(()=>{
+    getSubjects()
+    getStudents()
+  },[])
+  const getSubjects = async()=>{
+    try{
+      let res = await axios.get("https://long-gray-cougar-toga.cyclic.app/subjects");
+      setSubjectArr(res.data)
+    }catch(err){
+      throw err
+    }
+  }
+  const getStudents = async()=>{
+    try{
+      let res = await axios.get("https://long-gray-cougar-toga.cyclic.app/students")
+      setStudentsData(res.data)
+    }catch(err){
 
+    }
+  }
   const handleSubmitAddStudent = (e) => {
     e.preventDefault();
-    console.log(typeof mobileNumber);
-    const payload = {
-      name,
-      registrationNumber,
-      dateOfBirth,
-      mobileNumber,
-      year,
-    };
-    console.log(payload);
-    if (payload) {
+    if(present.length){
+      const payload = {...data,...subject,present:present}
       dispatch(addStudents(payload));
+    }else{
+      alert("Lecture cannot be without any attendence !")
     }
   };
+
+  const handleChange = (e)=>{
+    setData({...data, [e.target.name]:e.target.value})
+  }
+
+  const handleSubjectChange = (e)=>{
+    let subName;
+    subjectArr.forEach((el)=>{
+      if(el._id===e.target.value){
+        subName=el.name
+      }
+    })
+    setSubject({subject:subName,subject_id:e.target.value})
+  }
+
+  const handlePresent = (val,e)=>{
+    if(e.target.checked){
+      setPresent([...present, val])
+    }else{
+      let removeElem = present.filter((el)=>{
+        if(el!==val){
+          return true
+        }
+      })
+      setPresent(removeElem)
+    }
+  }
   return (
-    <div>
-      <Sidebar_Header />
-      <div className="mainContent">
+    <Box w={"100%"}>
+      <SidebarHeader />
+      <Box w={"60%"} m={"auto"} textAlign={"left"}  className="mainContent" p={10} >
         <Text textAlign="left" fontSize="1.5rem" p="2" fontWeight="2rem">
           Create New Lecture
         </Text>
         <form onSubmit={handleSubmitAddStudent} className="modalForm">
           <div>
-            <label>Name of Student:</label>
-            <input
-              onChange={(e) => setName(e.target.value)}
-              type="text"
-              required
-            />
-          </div>
-          <div>
-            <label>Registration Number :</label>
-            <input
-              onChange={(e) => setRegistrationNumber(e.target.value)}
-              type="text"
-              required
-            />
-          </div>
-
-          <div>
-            <label>Date Of Birth :</label>
+            <label>Lecture Date :</label>
             <br />
             <input
-              onChange={(e) => setDateOfBirth(e.target.value)}
+              onChange={handleChange}
+              name="lecture_date"
               type="date"
               required
+              value={data.lecture_date}
             />
           </div>
 
           <div>
-            <label>Mobile Number :</label>
+            <label>Lecture Start Time :</label>
+            <br />
             <input
-              onChange={(e) => setMobileNumber(e.target.value)}
-              type="number"
+              name="start_at"
+              onChange={handleChange}
+              type="time"
               required
+              value={data.start_at}
+            />
+          </div>
+
+          <div>
+            <label>Lecture End Time :</label>
+            <br />
+            <input
+              onChange={handleChange}
+              type="time"
+              name="end_at"
+              required
+              value={data.end_at}
             />
           </div>
 
           <div>
             <label>Select Year :</label> <br />
-            <select onChange={(e) => setYear(e.target.value)} required>
-              <option>Select Year</option>
-              <option>First</option>
-              <option>Second</option>
-              <option>Third</option>
-              <option>Fourth</option>
+            <select name="year" onChange={handleChange} required>
+              <option value="" >Select Year</option>
+              <option value={"First"}>First</option>
+              <option value={"Second"}>Second</option>
+              <option value={"Third"} >Third</option>
+              <option value={"Fourth"} >Fourth</option>
             </select>
           </div>
+
+          <div>
+            <label>Lecture Type :</label> <br />
+            <input type="text" name="lecture_type" value={data.lecture_type} onChange={handleChange} placeholder="Theory, Pratical..." />
+          </div>
+
+          <div>
+            <label >Select Lecture Subject :</label>
+            <select name="subject" onChange={handleSubjectChange}>
+              <option value="">--select Subject--</option>   
+            {subjectArr.map((el,id)=><option key={id} value={el._id}>{el.name}</option>)}
+            </select>
+          </div>
+          <Box border={2} >
+            <TableContainer>
+            <Table size="sm" variant="striped" colorScheme="purple">
+              <TableCaption>List of All Students Enrolled</TableCaption>
+              <Thead>
+                <Tr>
+                  <Th>Name</Th>
+                  <Th>Registration Number</Th>
+                  <Th>Roll Number</Th>
+                  <Th>Present</Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {studentsData.map((el) => (
+                  <Tr key={el._id}>
+                    <Td>{el.name}</Td>
+                    <Td> {el.registrationNumber}</Td>
+                    <Td>{el.year}</Td>
+                    <Td>
+                    <input onChange={(e)=>handlePresent(el._id,e)} type="checkbox" />
+                    </Td>
+                  </Tr>
+                ))}
+              </Tbody>
+              <Tfoot>
+                <Tr>
+                  <Th>Total={studentsData.length}</Th>
+                </Tr>
+              </Tfoot>
+            </Table>
+          </TableContainer>
+          </Box>
+          <input className="submitBtnAdmin" type="submit" />
         </form>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

@@ -31,15 +31,11 @@ const addStudentsError = () => {
 };
 
 const addStudents = (payload) => (dispatch) => {
-  dispatch(addStudentsRequest());
+  // dispatch(addStudentsRequest());
   return axios
-    .post(
-      `https://long-gray-cougar-toga.cyclic.app/students/addstudent`,
-      payload
-    )
+    .post(`https://long-gray-cougar-toga.cyclic.app/attendance`,payload)
     .then((res) => {
-      console.log(res.data.msg);
-      if (res.data.msg == "Student Added Successfully") {
+      if (res.data.message === "Attendence Recorded Successfully") {
         setTimeout(function () {
           dispatch(addStudentsError());
         }, 1000);

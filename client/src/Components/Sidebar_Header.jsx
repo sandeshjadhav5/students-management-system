@@ -9,7 +9,7 @@ import Sidebar from "./Sidebar";
 const smVariant = { navigation: "drawer", navigationButton: true };
 const mdVariant = { navigation: "sidebar", navigationButton: false };
 
-export default function Sidebar_Header() {
+export default function SidebarHeader() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const variants = useBreakpointValue({ base: smVariant, md: mdVariant });
 
