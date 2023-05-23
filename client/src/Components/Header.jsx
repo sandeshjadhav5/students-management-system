@@ -20,8 +20,8 @@ const Header = ({ showSidebarButton = true, onShowSidebar }) => {
           fontSize={{
             base: "1rem",
             sm: "1.1rem",
-            md: "1.2rem",
-            lg: "1.5rem",
+            md: "1.1rem",
+            lg: "1.2rem",
             xl: "1.6rem",
           }}
         >
