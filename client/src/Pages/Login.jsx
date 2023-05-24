@@ -69,7 +69,7 @@ const Login = () => {
               lineHeight={1.2}
               fontSize={{ base: "3xl", sm: "4xl", md: "5xl", lg: "6xl" }}
             >
-              STUDENTS MANAGEMENT SYSTEM
+              MIS FOR MECHANICAL DEPARTMENT
               <Text
                 as={"span"}
                 bgGradient="linear(to-r, red.400,pink.400)"

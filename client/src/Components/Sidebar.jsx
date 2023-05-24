@@ -40,9 +40,9 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
   const [mobileNumber, setMobileNumber] = useState();
   const [year, setYear] = useState("");
   const dispatch = useDispatch();
-  const [subjectArr, setSubjectArr] = useState([])
+  const [subjectArr, setSubjectArr] = useState([]);
   const [subjects, setSubjects] = useState([]);
-  const [sub, setSub] = useState([])
+  const [sub, setSub] = useState([]);
 
   const isAddStudentsLoading = useSelector(
     (state) => state.AppReducer.addStudentsLoading
@@ -51,18 +51,20 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
     (state) => state.AppReducer.addStudentsSuccess
   );
 
-  useEffect(()=>{
-    getSubjects()
-  },[])
-  
-  const getSubjects = async()=>{
-    try{
-      let res = await axios.get("https://long-gray-cougar-toga.cyclic.app/subjects");
-      setSubjectArr(res.data)
-    }catch(err){
-      throw err
+  useEffect(() => {
+    getSubjects();
+  }, []);
+
+  const getSubjects = async () => {
+    try {
+      let res = await axios.get(
+        "https://long-gray-cougar-toga.cyclic.app/subjects"
+      );
+      setSubjectArr(res.data);
+    } catch (err) {
+      throw err;
     }
-  }
+  };
   console.log(
     "isddLoading",
     isAddStudentsLoading,
@@ -70,7 +72,7 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
     isAddStudentsSuccess
   );
   const handleSubmitAddStudent = (e) => {
-    setSubjects([])
+    setSubjects([]);
     e.preventDefault();
     const payload = {
       name,
@@ -78,7 +80,7 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
       dateOfBirth,
       mobileNumber,
       year,
-      subjects:sub
+      subjects: sub,
     };
     console.log(payload);
     if (payload) {
@@ -102,23 +104,23 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
     });
   }
 
-  const handleSubjectChange = (e)=>{
-    let exist = sub.filter((el)=>{
-      if(el===e.target.value){
-        return el
+  const handleSubjectChange = (e) => {
+    let exist = sub.filter((el) => {
+      if (el === e.target.value) {
+        return el;
       }
-    })
-    if(exist.length==0){
-      setSub([...sub,e.target.value])
+    });
+    if (exist.length == 0) {
+      setSub([...sub, e.target.value]);
     }
-    let substr =""
-    subjectArr.forEach((el)=>{
-      if(el._id===e.target.value){
-        substr=el.name
+    let substr = "";
+    subjectArr.forEach((el) => {
+      if (el._id === e.target.value) {
+        substr = el.name;
       }
-    })
-      setSubjects([...subjects, {subject_id:e.target.value,subject:substr}])
-    }
+    });
+    setSubjects([...subjects, { subject_id: e.target.value, subject: substr }]);
+  };
   return variant === "sidebar" ? (
     <Box
       position="fixed"
@@ -149,6 +151,11 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
         <Box w="100%">
           <Link to="/markattendance">
             <Button w="100%">Lectures</Button>
+          </Link>
+        </Box>
+        <Box w="100%">
+          <Link to="/records">
+            <Button w="100%">Records</Button>
           </Link>
         </Box>
       </VStack>
@@ -210,11 +217,32 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
                 <label>Asign Subjects :</label> <br />
                 <select onChange={handleSubjectChange} required>
                   <option value="">--select subjects--</option>
-                {subjectArr.map((el,id)=><option key={id} value={el._id} >{el.name}</option>)}
+                  {subjectArr.map((el, id) => (
+                    <option key={id} value={el._id}>
+                      {el.name}
+                    </option>
+                  ))}
                 </select>
               </div>
-              <Flex border={"2px"} height={10} alignItems={"center"} overflowY={"hidden"} overflowX={"auto"} css={{"&::-webkit-scrollbar": {height:"8px"},"&::-webkit-scrollbar-track": {background: "#FF0055",width:"90%"}}}>
-                {subjects.map((el,id)=><Text key={id} mx={"4"} >{el.subject}</Text>)}
+              <Flex
+                border={"2px"}
+                height={10}
+                alignItems={"center"}
+                overflowY={"hidden"}
+                overflowX={"auto"}
+                css={{
+                  "&::-webkit-scrollbar": { height: "8px" },
+                  "&::-webkit-scrollbar-track": {
+                    background: "#FF0055",
+                    width: "90%",
+                  },
+                }}
+              >
+                {subjects.map((el, id) => (
+                  <Text key={id} mx={"4"}>
+                    {el.subject}
+                  </Text>
+                ))}
               </Flex>
               {!isAddStudentsLoading && (
                 <input className="submitBtnAdmin" type="submit" />
@@ -263,6 +291,11 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
                 <Box w="100%">
                   <Link to="/markattendance">
                     <Button w="100%">Lectures</Button>
+                  </Link>
+                </Box>
+                <Box w="100%">
+                  <Link to="/records">
+                    <Button w="100%">Records</Button>
                   </Link>
                 </Box>
               </VStack>

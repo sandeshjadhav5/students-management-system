@@ -14,20 +14,20 @@ const Header = ({ showSidebarButton = true, onShowSidebar }) => {
           />
         )}
       </Box>
-      <Center flex="1" h="40px">
-        <Text
-          fontFamily="body"
-          fontSize={{
-            base: "1rem",
-            sm: "1.1rem",
-            md: "1.1rem",
-            lg: "1.2rem",
-            xl: "1.6rem",
-          }}
-        >
-          Students Management System
-        </Text>
-      </Center>
+
+      <Text
+        fontFamily="body"
+        fontSize={{
+          base: "1rem",
+          sm: "1rem",
+          md: "1.2rem",
+          lg: "1.2rem",
+          xl: "1.6rem",
+        }}
+      >
+        Students Management System
+      </Text>
+
       <Box flex="1" />
     </Flex>
   );
