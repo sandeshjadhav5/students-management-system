@@ -20,7 +20,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 
-import { addStudents } from "../Redux/AppReducer/action";
+import { addLecture } from "../Redux/AppReducer/action";
 import { useDispatch } from "react-redux";
 import SidebarHeader from "../Components/Sidebar_Header";
 import axios from "axios";
@@ -34,40 +34,38 @@ const MarkAttendendance = () => {
     lecture_type: "",
   });
   const dispatch = useDispatch();
-  const [subjectArr, setSubjectArr] = useState([]);
-  const [subject, setSubject] = useState(null);
-  const [studentsData, setStudentsData] = useState([]);
-  const [present, setPresent] = useState([]);
-
-  useEffect(() => {
-    getSubjects();
-    getStudents();
-  }, []);
-  const getSubjects = async () => {
-    try {
-      let res = await axios.get(
-        "https://long-gray-cougar-toga.cyclic.app/subjects"
-      );
-      setSubjectArr(res.data);
-    } catch (err) {
-      throw err;
+  const [subjectArr, setSubjectArr] = useState([])
+  const [subject, setSubject] = useState(null)
+  const [studentsData, setStudentsData] = useState([])
+  const [present, setPresent] = useState([])
+  
+  useEffect(()=>{
+    getSubjects()
+    getStudents()
+  },[])
+  const getSubjects = async()=>{
+    try{
+      let res = await axios.get("https://long-gray-cougar-toga.cyclic.app/subjects");
+      setSubjectArr(res.data)
+    }catch(err){
+      throw err
     }
-  };
-  const getStudents = async () => {
-    try {
-      let res = await axios.get(
-        "https://long-gray-cougar-toga.cyclic.app/students"
-      );
-      setStudentsData(res.data);
-    } catch (err) {}
-  };
+  }
+  const getStudents = async()=>{
+    try{
+      let res = await axios.get("https://long-gray-cougar-toga.cyclic.app/students")
+      setStudentsData(res.data)
+    }catch(err){
+
+    }
+  }
   const handleSubmitAddStudent = (e) => {
     e.preventDefault();
-    if (present.length) {
-      const payload = { ...data, ...subject, present: present };
+    if(present.length){
+      const payload = {...data,...subject,present:present}
       dispatch(addStudents(payload));
-    } else {
-      alert("Lecture cannot be without any attendence !");
+    }else{
+      alert("Lecture cannot be without any attendence !")
     }
   };
 
@@ -142,78 +140,64 @@ const MarkAttendendance = () => {
               />
             </div>
 
-            <div>
-              <label>Select Year :</label> <br />
-              <select name="year" onChange={handleChange} required>
-                <option value="">Select Year</option>
-                <option value={"First"}>First</option>
-                <option value={"Second"}>Second</option>
-                <option value={"Third"}>Third</option>
-                <option value={"Fourth"}>Fourth</option>
-              </select>
-            </div>
+          <div>
+            <label>Select Year :</label> <br />
+            <select name="year" onChange={handleChange} required>
+              <option value="" >Select Year</option>
+              <option value={"First"}>First</option>
+              <option value={"Second"}>Second</option>
+              <option value={"Third"} >Third</option>
+              <option value={"Fourth"} >Fourth</option>
+            </select>
+          </div>
 
-            <div>
-              <label>Lecture Type :</label> <br />
-              <input
-                type="text"
-                name="lecture_type"
-                value={data.lecture_type}
-                onChange={handleChange}
-                placeholder="Theory, Pratical..."
-              />
-            </div>
+          <div>
+            <label>Lecture Type :</label> <br />
+            <input type="text" name="lecture_type" value={data.lecture_type} onChange={handleChange} placeholder="Theory, Pratical..." />
+          </div>
 
-            <div>
-              <label>Select Lecture Subject :</label>
-              <select name="subject" onChange={handleSubjectChange}>
-                <option value="">--select Subject--</option>
-                {subjectArr.map((el, id) => (
-                  <option key={id} value={el._id}>
-                    {el.name}
-                  </option>
+          <div>
+            <label >Select Lecture Subject :</label>
+            <select name="subject" onChange={handleSubjectChange}>
+              <option value="">--select Subject--</option>   
+            {subjectArr.map((el,id)=><option key={id} value={el._id}>{el.name}</option>)}
+            </select>
+          </div>
+          <Box border={2} >
+            <TableContainer>
+            <Table size="sm" variant="striped" colorScheme="purple">
+              <TableCaption>List of All Students Enrolled</TableCaption>
+              <Thead>
+                <Tr>
+                  <Th>Name</Th>
+                  <Th>Registration Number</Th>
+                  <Th>Roll Number</Th>
+                  <Th>Present</Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {studentsData.map((el) => (
+                  <Tr key={el._id}>
+                    <Td>{el.name}</Td>
+                    <Td> {el.registrationNumber}</Td>
+                    <Td>{el.year}</Td>
+                    <Td>
+                    <input onChange={(e)=>handlePresent(el._id,e)} type="checkbox" />
+                    </Td>
+                  </Tr>
                 ))}
-              </select>
-            </div>
-            <Box border={2}>
-              <TableContainer>
-                <Table size="sm" variant="striped" colorScheme="purple">
-                  <TableCaption>List of All Students Enrolled</TableCaption>
-                  <Thead>
-                    <Tr>
-                      <Th>Name</Th>
-                      <Th>Registration Number</Th>
-                      <Th>Roll Number</Th>
-                      <Th>Present</Th>
-                    </Tr>
-                  </Thead>
-                  <Tbody>
-                    {studentsData.map((el) => (
-                      <Tr key={el._id}>
-                        <Td>{el.name}</Td>
-                        <Td> {el.registrationNumber}</Td>
-                        <Td>{el.year}</Td>
-                        <Td>
-                          <input
-                            onChange={(e) => handlePresent(el._id, e)}
-                            type="checkbox"
-                          />
-                        </Td>
-                      </Tr>
-                    ))}
-                  </Tbody>
-                  <Tfoot>
-                    <Tr>
-                      <Th>Total={studentsData.length}</Th>
-                    </Tr>
-                  </Tfoot>
-                </Table>
-              </TableContainer>
-            </Box>
-            <input className="submitBtnAdmin" type="submit" />
-          </form>
-        </Box>
-      </div>
+              </Tbody>
+              <Tfoot>
+                <Tr>
+                  <Th>Total={studentsData.length}</Th>
+                </Tr>
+              </Tfoot>
+            </Table>
+          </TableContainer>
+          </Box>
+          <input className="submitBtnAdmin" type="submit" />
+        </form>
+      </Box>
     </Box>
   );
 };
