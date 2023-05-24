@@ -5,7 +5,7 @@ import "../Pages/Home.css";
 import { Link } from "react-router-dom";
 import { Box, Heading, Table, TableCaption, TableContainer, Tbody, Td, Text, Tfoot, Th, Thead, Toast, Tr, useToast } from "@chakra-ui/react";
 
-import { addStudents} from "../Redux/AppReducer/action";
+import { addLecture} from "../Redux/AppReducer/action";
 import { useDispatch } from "react-redux";
 import SidebarHeader from "../Components/Sidebar_Header";
 import axios from "axios";
@@ -20,8 +20,11 @@ const MarkAttendendance = () => {
   
   useEffect(()=>{
     getSubjects()
-    getStudents()
-  },[])
+    if(data.year&&subject){
+      getStudents()
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[data.year,subject?.subject_id])
   const getSubjects = async()=>{
     try{
       let res = await axios.get("https://long-gray-cougar-toga.cyclic.app/subjects");
@@ -30,9 +33,10 @@ const MarkAttendendance = () => {
       throw err
     }
   }
+  console.log(studentsData)
   const getStudents = async()=>{
     try{
-      let res = await axios.get("https://long-gray-cougar-toga.cyclic.app/students")
+      let res = await axios.get(`https://long-gray-cougar-toga.cyclic.app/students?year=${data.year}&subject=${subject?.subject_id}`)
       setStudentsData(res.data)
     }catch(err){
 
@@ -42,7 +46,7 @@ const MarkAttendendance = () => {
     e.preventDefault();
     if(present.length){
       const payload = {...data,...subject,present:present}
-      dispatch(addStudents(payload));
+      dispatch(addLecture(payload));
     }else{
       alert("Lecture cannot be without any attendence !")
     }
@@ -121,7 +125,7 @@ const MarkAttendendance = () => {
           <div>
             <label>Select Year :</label> <br />
             <select name="year" onChange={handleChange} required>
-              <option value="" >Select Year</option>
+              <option value="" >--select--</option>
               <option value={"First"}>First</option>
               <option value={"Second"}>Second</option>
               <option value={"Third"} >Third</option>
@@ -131,7 +135,12 @@ const MarkAttendendance = () => {
 
           <div>
             <label>Lecture Type :</label> <br />
-            <input type="text" name="lecture_type" value={data.lecture_type} onChange={handleChange} placeholder="Theory, Pratical..." />
+            <select name="lecture_type" required onChange={handleChange} >
+              <option value="">--select type--</option>
+              <option value="Theory">Theory</option>
+              <option value="Practical">Practical</option>
+            </select>
+            {/* <input type="text" name="" value={data.lecture_type} onChange={handleChange} placeholder="Theory, Pratical..." /> */}
           </div>
 
           <div>
@@ -154,11 +163,12 @@ const MarkAttendendance = () => {
                 </Tr>
               </Thead>
               <Tbody>
+                {studentsData.length===0&&<Tr textAlign={"center"} color={"gray.500"}>Please Select Lecture and Year to Get Students</Tr>}
                 {studentsData.map((el) => (
                   <Tr key={el._id}>
                     <Td>{el.name}</Td>
                     <Td> {el.registrationNumber}</Td>
-                    <Td>{el.year}</Td>
+                    <Td>{el._id}</Td>
                     <Td>
                     <input onChange={(e)=>handlePresent(el._id,e)} type="checkbox" />
                     </Td>
