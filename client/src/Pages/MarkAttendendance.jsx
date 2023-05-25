@@ -69,6 +69,7 @@ const MarkAttendendance = () => {
     e.preventDefault();
     if (present.length) {
       const payload = { ...data, ...subject, present: present };
+      // console.log("payload=>", payload);
       dispatch(addLecture(payload));
     } else {
       alert("Lecture cannot be without any attendence !");
@@ -102,16 +103,17 @@ const MarkAttendendance = () => {
     }
   };
   return (
-    <Box w={"100%"}>
+    <div>
       <SidebarHeader />
-      <Box
-        w={"60%"}
-        m={"auto"}
-        textAlign={"left"}
-        className="mainContent"
-        p={10}
-      >
-        <Text textAlign="left" fontSize="1.5rem" p="2" fontWeight="2rem">
+
+      <div style={{ padding: "1rem" }} className="mainContent">
+        <Text
+          textAlign="left"
+          fontSize="1.5rem"
+          p="2"
+          fontWeight="bold"
+          letterSpacing={2}
+        >
           Create New Lecture
         </Text>
         <form onSubmit={handleSubmitAddStudent} className="modalForm">
@@ -169,7 +171,6 @@ const MarkAttendendance = () => {
               <option value="Theory">Theory</option>
               <option value="Practical">Practical</option>
             </select>
-            {/* <input type="text" name="" value={data.lecture_type} onChange={handleChange} placeholder="Theory, Pratical..." /> */}
           </div>
 
           <div>
@@ -225,8 +226,8 @@ const MarkAttendendance = () => {
           </Box>
           <input className="submitBtnAdmin" type="submit" />
         </form>
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 };
 
