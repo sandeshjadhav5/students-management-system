@@ -39,11 +39,7 @@ const Attendance = () => {
   useEffect(() => {
     getStudents();
   }, []);
-  useEffect(() => {
-    if (!isAuth) {
-      return navigate("/login");
-    }
-  }, [isAuth]);
+
   return (
     <div>
       <Sidebar_Header />
