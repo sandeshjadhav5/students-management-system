@@ -15,6 +15,7 @@ const userLoginFailure = () => {
 
 const logoutUser = () => {
   localStorage.removeItem("token");
+  localStorage.setItem("isAuth", JSON.stringify(false));
   return { type: types.LOGOUT_USER };
 };
 

@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import "../Pages/Home.css";
 import "./Sidebar.css";
 import { Link } from "react-router-dom";
-import { Flex, Text, useToast } from "@chakra-ui/react";
+import { FiLogOut } from "react-icons/fi";
+import { Flex, Spacer, Text, useToast } from "@chakra-ui/react";
 import {
   Alert,
   AlertIcon,
@@ -29,6 +30,7 @@ import {
   ModalBody,
   ModalFooter,
 } from "@chakra-ui/react";
+import { logoutUser } from "../Redux/AuthReducer/action";
 import { addStudents, addStudentsSuccess } from "../Redux/AppReducer/action";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -65,12 +67,18 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
       throw err;
     }
   };
-  console.log(
-    "isddLoading",
-    isAddStudentsLoading,
-    "isAddSuccess",
-    isAddStudentsSuccess
-  );
+  // console.log(
+  //   "isddLoading",
+  //   isAddStudentsLoading,
+  //   "isAddSuccess",
+  //   isAddStudentsSuccess
+  // );
+
+  const handleLogout = () => {
+    console.log("logged out");
+    dispatch(logoutUser());
+  };
+
   const handleSubmitAddStudent = (e) => {
     setSubjects([]);
     e.preventDefault();
@@ -136,7 +144,7 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
           SGGSIE&T
         </Heading>
         <Box w="100%">
-          <Link to="/">
+          <Link to="/dashboard">
             <Button w="100%">Home</Button>
           </Link>
         </Box>
@@ -156,6 +164,16 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
         <Box w="100%">
           <Link to="/records">
             <Button w="100%">Records</Button>
+          </Link>
+        </Box>
+        <Box w="100%">
+          <Link to="/">
+            <Button w="100%" onClick={handleLogout}>
+              Logout
+              <span style={{ marginLeft: "1rem" }}>
+                <FiLogOut />
+              </span>
+            </Button>
           </Link>
         </Box>
       </VStack>
@@ -276,7 +294,7 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
                   SGGSIE&T{" "}
                 </Heading>
                 <Box w="100%">
-                  <Link to="/">
+                  <Link to="/dashboard">
                     <Button w="100%">Home</Button>
                   </Link>
                 </Box>
@@ -296,6 +314,16 @@ const Sidebar = ({ isOpen, variant, onClose }) => {
                 <Box w="100%">
                   <Link to="/records">
                     <Button w="100%">Records</Button>
+                  </Link>
+                </Box>
+                <Box w="100%">
+                  <Link to="/">
+                    <Button w="100%" onClick={handleLogout}>
+                      Logout
+                      <span style={{ marginLeft: "1rem" }}>
+                        <FiLogOut />
+                      </span>
+                    </Button>
                   </Link>
                 </Box>
               </VStack>

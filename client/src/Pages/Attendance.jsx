@@ -15,6 +15,9 @@ import {
   TableCaption,
   TableContainer,
 } from "@chakra-ui/react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 const Attendance = () => {
   const [studentsData, setStudentsData] = useState([]);
   const [selectedYear, setSelectedYear] = useState("");
@@ -31,9 +34,16 @@ const Attendance = () => {
         console.log(err);
       });
   };
+  const isAuth = useSelector((state) => state.AuthReducer.isAuth);
+  const navigate = useNavigate();
   useEffect(() => {
     getStudents();
   }, []);
+  useEffect(() => {
+    if (!isAuth) {
+      return navigate("/login");
+    }
+  }, [isAuth]);
   return (
     <div>
       <Sidebar_Header />
