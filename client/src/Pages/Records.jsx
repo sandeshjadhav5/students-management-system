@@ -9,6 +9,9 @@ const Records = () => {
   const [secondYear, setSecondYear] = useState({});
   const [thirdYear, setThirdYear] = useState({});
   const [fourthYear, setFourthYear] = useState({});
+  const [subject, setSubject] = useState([]);
+  const [subAvg, setSubAvg] = useState({});
+  const [subName, setSubName] = useState("");
 
   const getByYearOne = () => {
     axios
@@ -66,11 +69,36 @@ const Records = () => {
       });
   };
 
+  const getSubjects = async () => {
+    try {
+      let res = await axios.get(
+        "https://long-gray-cougar-toga.cyclic.app/subjects"
+      );
+      setSubject(res.data);
+    } catch (err) {
+      throw err;
+    }
+  };
+  const handleSubjectChange = (e) => {
+    setSubName(e.target.value);
+    axios
+      .get(
+        `https://long-gray-cougar-toga.cyclic.app/attendance/records/subject?sub=${e.target.value}`
+      )
+      .then((res) => {
+        console.log("averageeeee", res.data);
+        setSubAvg(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   useEffect(() => {
     getByYearOne();
     getByYearTwo();
     getByYearThree();
     getByYearFour();
+    getSubjects();
   }, []);
   return (
     <div>
@@ -150,6 +178,43 @@ const Records = () => {
                 </Text>
                 <Text fontWeight="bold">
                   Average Attendance : {fourthYear.average_attendence}
+                </Text>
+              </Box>
+            </Box>
+          </Box>
+          <Box mt="5" border="solid #ccc 1px" p="2">
+            <Text
+              fontSize="1.7rem"
+              color="green"
+              fontWeight="bold"
+              textAlign="left"
+            >
+              Average Attendance By Subjects
+            </Text>
+            <Box m="5" border="solid #ccc 2px" h="4rem">
+              <Text>Select Lecture Subject :</Text>
+              <select name="subject" onChange={handleSubjectChange}>
+                <option value="">--select Subject--</option>
+                {subject?.map((el, id) => (
+                  <option key={id} value={el._id}>
+                    {el.name}
+                  </option>
+                ))}
+              </select>
+            </Box>
+            <Box m="3" border="solid #ccc 1px" p="3" borderRadius="5">
+              {/* <Text m="2" fontSize="1.5rem" fontWeight="bold">
+                {subName} Average Attendance
+              </Text> */}
+              <Box mt="2" display="flex" justifyContent={"space-between"}>
+                <Text fontWeight="bold">
+                  Enrolled Students : {subAvg.enrolledStudents}{" "}
+                </Text>
+                <Text fontWeight="bold">
+                  Total Lectures : {subAvg.lectures_count}
+                </Text>
+                <Text fontWeight="bold">
+                  Average Attendance : {subAvg.average_attendence}
                 </Text>
               </Box>
             </Box>
