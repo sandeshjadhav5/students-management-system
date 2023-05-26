@@ -30,7 +30,7 @@ const Records = () => {
   const getByYearTwo = () => {
     axios
       .get(
-        `https://long-gray-cougar-toga.cyclic.app/attendance/records/year?year=Two`
+        `https://long-gray-cougar-toga.cyclic.app/attendance/records/year?year=Second`
       )
       .then((res) => {
         console.log(res.data);
@@ -44,7 +44,7 @@ const Records = () => {
   const getByYearThree = () => {
     axios
       .get(
-        `https://long-gray-cougar-toga.cyclic.app/attendance/records/year?year=Three`
+        `https://long-gray-cougar-toga.cyclic.app/attendance/records/year?year=Third`
       )
       .then((res) => {
         console.log(res.data);
@@ -58,7 +58,7 @@ const Records = () => {
   const getByYearFour = () => {
     axios
       .get(
-        `https://long-gray-cougar-toga.cyclic.app/attendance/records/year?year=Four`
+        `https://long-gray-cougar-toga.cyclic.app/attendance/records/year?year=Fourth`
       )
       .then((res) => {
         console.log(res.data);
