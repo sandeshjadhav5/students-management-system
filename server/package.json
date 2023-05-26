@@ -1,5 +1,5 @@
 {
-  "name": "student-management-system-backend",
+  "name": "attendance-management-system",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Dev-Ninja-5/student-management-system-backend.git"
+    "url": "git+https://github.com/sandeshjadhav5/attendance-management-system"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Dev-Ninja-5/student-management-system-backend/issues"
+    "url": "https://github.com/sandeshjadhav5/attendance-management-system/issues"
   },
-  "homepage": "https://github.com/Dev-Ninja-5/student-management-system-backend#readme",
+  "homepage": "https://github.com/sandeshjadhav5/attendance-management-system#readme",
   "dependencies": {
     "bcrypt": "^5.1.0",
     "cors": "^2.8.5",

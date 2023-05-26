@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-
 const studentScehma = mongoose.Schema({
   name: {
     type: String,
@@ -10,12 +9,11 @@ const studentScehma = mongoose.Schema({
     default: "https://i.imgur.com/xYtIRH7.png",
   },
   registrationNumber: {
-    type: Number,
+    type: String,
     required: true,
   },
   dateOfBirth: {
     type: Date,
-    default: Date.now,
   },
   mobileNumber: {
     type: Number,
@@ -25,16 +23,9 @@ const studentScehma = mongoose.Schema({
     type: String,
     required: true,
   },
-  subjects: [
-    {
-      name: {
-        type: String,
-        required: true,
-      },
-    },
-  ],
+  subjects:[{type:mongoose.Schema.Types.ObjectId,ref:"subject"}],
   userID: String,
-});
+},{versionKey: false});
 
 const StudentModel = mongoose.model("student", studentScehma);
 

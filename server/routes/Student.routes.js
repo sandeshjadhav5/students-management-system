@@ -1,28 +1,51 @@
 const express = require("express");
 
 const { StudentModel } = require("../models/Students.model");
+const { default: mongoose } = require("mongoose");
 
 const studentRouter = express.Router();
 
 //GET REQUEST - GET STUDENTS
 studentRouter.get("/", async (req, res) => {
+  const {year, subject} = req.query;
+  sub = new mongoose.Types.ObjectId(subject)
   try {
-    const students = await StudentModel.find(req.body);
-    res.send(students);
+    if(year&&sub){
+      const students = await StudentModel.find({subjects:{$elemMatch:{$eq:sub}},year:year});
+      res.send(students);
+    }else{
+      const students = await StudentModel.find();
+      res.send(students);
+    }
   } catch (err) {
-    console.log("err is => ", err);
+   res.status(400).send(err)
   }
 });
 
-//GET REQUEST - SINGLE STUDENT
+//GET REQUEST - SINGLE STUDENT ALL DATA
 studentRouter.get("/:id", async (req, res) => {
   const id = req.params.id;
   try {
-    const student = await StudentModel.findOne({ _id: id });
-    console.log(student);
-    res.send(student);
+    let data = await StudentModel.findById(id)
+      .populate({
+        path: "subjects",
+        populate: { path: "lectures", select: "-absent" },
+      })
+      .lean()
+      .exec();
+    data.subjects.forEach((el) => {
+      let count = 0;
+      el.lectures.forEach((e) => {
+        if (e.present.includes(id)) {
+          count++;
+        }
+      });
+      let avg = Math.round((count / el.lectures.length) * 100);
+      el["attendence_percentage"] = avg;
+    });
+    res.status(200).send({ ...data });
   } catch (err) {
-    console.log(err);
+    res.status(400).send("No Student was found", err);
   }
 });
 
@@ -43,12 +66,12 @@ studentRouter.post("/addstudent", async (req, res) => {
 studentRouter.patch("/update/:id", async (req, res) => {
   const payload = req.body;
   const id = req.params.id;
-  const student = await StudentModel.find({ _id: id });
   try {
-    await StudentModel.findByIdAndUpdate({ _id: id }, payload);
+    await StudentModel.findByIdAndUpdate(id, payload);
     res.send("updated student information");
   } catch (err) {
-    res.send({ msg: "Something Went Wrong" });
+    console.log(err);
+    res.status(400).send({ msg: "Something Went Wrong" });
   }
 });
 

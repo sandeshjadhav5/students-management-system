@@ -26,7 +26,7 @@ userRouter.post("/register", async (req, res) => {
           password: hashedPassword,
         });
         await user.save();
-        res.setHeader("Access-Control-Allow-Origin", "*");
+
         res.send(`${name} , You are Successfully Registered`);
       }
     });
@@ -50,12 +50,14 @@ userRouter.post("/login", async (req, res) => {
           const token = jwt.sign({ userID: user[0]._id }, process.env.key, {
             expiresIn: "1d",
           });
-          res.setHeader("Access-Control-Allow-Origin", "*");
-          res.send({ msg: "Login Successful", token: token });
+          console.log("login Success");
+          res.send("Login Successful");
         } else {
-          res.send("Login Failed");
+          res.send("Wrong Credentials");
         }
       });
+    } else {
+      res.send("Enter Correct Details");
     }
   } catch (err) {
     console.log(err);
