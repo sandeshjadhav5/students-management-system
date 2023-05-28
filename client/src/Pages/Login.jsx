@@ -34,7 +34,10 @@ const Login = () => {
 
   const navigate = useNavigate();
   const isAuthLoading = useSelector((state) => state.AuthReducer.isAuthLoading);
-  const isAuth = useSelector((state) => state.AuthReducer.isAuth);
+  const isAuth =
+    useSelector((state) => state.AuthReducer.isAuth) ||
+    JSON.parse(localStorage.getItem("isAuth")) ||
+    false;
   console.log("isAuth=>", isAuth, "isAuthLoading=>", isAuthLoading);
 
   const handleSubmit = (e) => {

@@ -6,13 +6,21 @@ import Attendance from "./Attendance";
 import MarkAttendendance from "./MarkAttendendance";
 import SingleStudent from "./SingleStudent";
 import Records from "./Records";
+import RequireAuth from "../Components/RequireAuth";
 
 const MainRoutes = () => {
   return (
     <div>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/dashboard" element={<Home />} />
+        <Route
+          path="/dashboard"
+          element={
+            <RequireAuth>
+              <Home />
+            </RequireAuth>
+          }
+        />
         <Route path="/attendance" element={<Attendance />} />
         <Route path="/markattendance" element={<MarkAttendendance />} />
         <Route path="/attendance/:id" element={<SingleStudent />} />
