@@ -65,7 +65,7 @@ const MarkAttendendance = () => {
       setStudentsData(res.data);
     } catch (err) {}
   };
-  const handleSubmitAddStudent = (e) => {
+  const handleSubmitAddLecture = (e) => {
     e.preventDefault();
     if (present.length) {
       const payload = { ...data, ...subject, present: present };
@@ -116,7 +116,7 @@ const MarkAttendendance = () => {
         >
           Create New Lecture
         </Text>
-        <form onSubmit={handleSubmitAddStudent} className="modalForm">
+        <form onSubmit={handleSubmitAddLecture} className="modalForm">
           <div>
             <label>Lecture Date :</label>
             <br />

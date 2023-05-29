@@ -8,6 +8,9 @@ const initialState = {
   addStudentsLoading: false,
   addStudentsSuccess: false,
   addStudentsError: false,
+  addLectureReq: false,
+  addLectureSuccess: false,
+  addLectureError: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -49,6 +52,25 @@ const reducer = (state = initialState, action) => {
         addStudentsLoading: false,
         addStudentsSuccess: false,
         addStudentsError: true,
+      };
+    case types.ADD_LECTURE_REQUEST:
+      return {
+        ...state,
+        addLectureReq: true,
+      };
+    case types.ADD_LECTURE_SUCCESS:
+      return {
+        ...state,
+        addLectureSuccess: true,
+        addLectureReq: false,
+        addLectureError: false,
+      };
+    case types.ADD_LECTURE_ERROR:
+      return {
+        ...state,
+        addLectureError: true,
+        addLectureReq: false,
+        addLectureSuccess: false,
       };
     default:
       return state;

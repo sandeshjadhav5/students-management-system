@@ -30,29 +30,29 @@ const addStudentsError = () => {
   return { type: types.ADD_STUDENTS_ERROR };
 };
 
-const addLectureRequest = ()=>{
-  return {type:types.ADD_LECTURE_REQUEST}
-}
-const addLecturesuccess = ()=>{
-  return {type:types.ADD_LECTURE_SUCCESS}
-}
-const addLecturfailure = ()=>{
-  return {type:types.ADD_LECTURE_ERROR}
-}
+const addLectureRequest = () => {
+  return { type: types.ADD_LECTURE_REQUEST };
+};
+const addLecturesuccess = () => {
+  return { type: types.ADD_LECTURE_SUCCESS };
+};
+const addLecturfailure = () => {
+  return { type: types.ADD_LECTURE_ERROR };
+};
 
 const addStudents = (payload) => (dispatch) => {
   dispatch(addStudentsRequest());
   return axios
-  .post(
-    `https://long-gray-cougar-toga.cyclic.app/students/addstudent`,
-    payload
-  )
-  .then((res) => {
-    console.log(res.data.msg);
-    if (res.data.msg == "Student Added Successfully") {
-      setTimeout(function () {
-        dispatch(addStudentsError());
-      }, 1000);
+    .post(
+      `https://long-gray-cougar-toga.cyclic.app/students/addstudent`,
+      payload
+    )
+    .then((res) => {
+      console.log(res.data.msg);
+      if (res.data.msg == "Student Added Successfully") {
+        setTimeout(function () {
+          dispatch(addStudentsError());
+        }, 1000);
         dispatch(addStudentsSuccess());
       } else if (res.data.msg == "Something Went Wrong") {
         let x = document.getElementById("snackbar");
@@ -71,19 +71,20 @@ const addStudents = (payload) => (dispatch) => {
     });
 };
 
-const addLecture = (payload) => async(dispatch)=>{
-  try{
+const addLecture = (payload) => async (dispatch) => {
+  dispatch(addLectureRequest());
+  try {
     dispatch(addLectureRequest());
-    let res = await axios.post(`https://long-gray-cougar-toga.cyclic.app/attendance`,payload)
-    console.log(res)
-    dispatch(addLecturesuccess())
-  }catch(err){
-    dispatch(addLecturfailure())
+    let res = await axios.post(
+      `https://long-gray-cougar-toga.cyclic.app/attendance`,
+      payload
+    );
+    console.log(res);
+    dispatch(addLecturesuccess());
+  } catch (err) {
+    dispatch(addLecturfailure());
   }
-}
-
-
-
+};
 
 export {
   getStudents,
@@ -94,9 +95,8 @@ export {
   addStudentsError,
   addStudentsRequest,
   addStudentsSuccess,
-
   addLecture,
   addLectureRequest,
   addLecturesuccess,
-  addLecturfailure
+  addLecturfailure,
 };
