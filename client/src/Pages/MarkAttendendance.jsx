@@ -21,7 +21,7 @@ import {
 } from "@chakra-ui/react";
 
 import { addLecture } from "../Redux/AppReducer/action";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import SidebarHeader from "../Components/Sidebar_Header";
 import axios from "axios";
 
@@ -38,6 +38,12 @@ const MarkAttendendance = () => {
   const [subject, setSubject] = useState(null);
   const [studentsData, setStudentsData] = useState([]);
   const [present, setPresent] = useState([]);
+
+  const addLectureLoading = useSelector(
+    (state) => state.AppReducer.addLectureReq
+  );
+
+  console.log("addLectureLoading>>>", addLectureLoading);
 
   useEffect(() => {
     getSubjects();
@@ -105,7 +111,6 @@ const MarkAttendendance = () => {
   return (
     <div>
       <SidebarHeader />
-
       <div style={{ padding: "1rem" }} className="mainContent">
         <Text
           textAlign="left"
@@ -224,9 +229,22 @@ const MarkAttendendance = () => {
               </Table>
             </TableContainer>
           </Box>
-          <input className="submitBtnAdmin" type="submit" />
+          {!addLectureLoading && (
+            <input className="submitBtnAdmin" type="submit" />
+          )}
+          {addLectureLoading && (
+            <div className="addLectureBtnLoading">
+              <div>
+                <img
+                  src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif"
+                  alt="loading..."
+                />
+              </div>
+            </div>
+          )}
         </form>
       </div>
+      <div id="snackbar"></div>
     </div>
   );
 };

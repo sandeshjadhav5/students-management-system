@@ -79,8 +79,18 @@ const addLecture = (payload) => async (dispatch) => {
       `https://long-gray-cougar-toga.cyclic.app/attendance`,
       payload
     );
-    console.log(res);
-    dispatch(addLecturesuccess());
+    console.log(res.data);
+    if (res.data.message == "Attendence Recorded Successfully") {
+      let x = document.getElementById("snackbar");
+      x.innerText = res.data.message;
+      x.style.backgroundColor = "green";
+      x.className = "show";
+      setTimeout(function () {
+        x.className = x.className.replace("show", "");
+        dispatch(addLecturesuccess());
+      }, 3000);
+      dispatch(addLecturesuccess());
+    }
   } catch (err) {
     dispatch(addLecturfailure());
   }

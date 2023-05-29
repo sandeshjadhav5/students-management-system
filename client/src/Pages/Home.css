@@ -48,6 +48,24 @@
   width: 100%;
 }
 
+.addLectureBtnLoading {
+  margin-top: 1rem;
+  border: none;
+  padding: 0.2rem;
+  background-color: #a9dbe6;
+}
+.addLectureBtnLoading div {
+  margin: auto;
+  width: 10%;
+  height: 50%;
+  justify-content: center;
+  align-items: center;
+}
+.addLectureBtnLoading div img {
+  width: 50%;
+  margin: auto;
+}
+
 #snackbar {
   visibility: hidden;
   min-width: 250px;
