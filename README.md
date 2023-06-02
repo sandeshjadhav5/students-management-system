@@ -1,4 +1,4 @@
-<h1 align="center">Attendance Management System App</h1>
+<h1 align="center">Attendance Management System</h1>
 
 This is a Attendance Management Web Application created for my Client, where admin(teacher) can manage students attendance , add students, change attrendance status of students, generate avaerage attendances also can create new lectures 
 <hr/>
