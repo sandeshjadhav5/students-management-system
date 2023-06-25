@@ -1,6 +1,6 @@
 <h1 align="center">Attendance Management System</h1>
 
-This is a Attendance Management Web Application created for my Client, where admin(teacher) can manage students attendance , add students, change attrendance status of students, generate avaerage attendances also can create new lectures 
+This is an Attendance Management Web Application created for my Client, where the admin(teacher) can manage student's attendance , add students, change the attendance status of students, generate average attendances also can create new lectures 
 <hr/>
 
 
@@ -63,6 +63,9 @@ Server - https://long-gray-cougar-toga.cyclic.app/
 
 ### Individual Student Records
 <img src="https://i.imgur.com/tfEBTO8.png" alt="home ui"/>
+
+### Create Lecture and Mark Attendance
+<img src="https://i.imgur.com/aUL0BwD.png" alt="home ui"/>
 
 
 
