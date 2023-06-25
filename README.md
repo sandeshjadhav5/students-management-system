@@ -47,6 +47,9 @@ User Side - https://a5-management-system.netlify.app/
 
 Server - https://long-gray-cougar-toga.cyclic.app/
 
+## Screenshots
+<img src="https://i.imgur.com/4ijYuUW.png"/>
+
 ## To Run Locally
 
 Clone the project
