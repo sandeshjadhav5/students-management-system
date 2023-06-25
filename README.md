@@ -64,8 +64,11 @@ Server - https://long-gray-cougar-toga.cyclic.app/
 ### Individual Student Records
 <img src="https://i.imgur.com/tfEBTO8.png" alt="home ui"/>
 
-### Create Lecture and Mark Attendance
+### Create a Lecture and Mark Attendance
 <img src="https://i.imgur.com/aUL0BwD.png" alt="home ui"/>
+
+### Average Attendance Records
+<img src="https://i.imgur.com/1ooHDnr.png" alt="home ui"/>
 
 
 
