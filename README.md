@@ -48,7 +48,23 @@ User Side - https://a5-management-system.netlify.app/
 Server - https://long-gray-cougar-toga.cyclic.app/
 
 ## Screenshots
-<img src="https://i.imgur.com/4ijYuUW.png"/>
+
+### Login Page
+<img src="https://i.imgur.com/IA8uTwt.png" alt="login ui"/>
+
+### Dashboard-Home
+<img src="https://i.imgur.com/4ijYuUW.png" alt="home ui"/>
+
+### Add Student
+<img src="https://i.imgur.com/sgomR3f.png" alt="home ui"/>
+
+### Enrolled students list
+<img src="https://i.imgur.com/k5tfqY8.png" alt="home ui"/>
+
+### Individual Student Records
+<img src="https://i.imgur.com/tfEBTO8.png" alt="home ui"/>
+
+
 
 ## To Run Locally
 
